@@ -1,0 +1,17 @@
+var climbStairs = function(n) {
+    const memo = {};
+    
+    function permute(num) {
+        if(num < 0) return 0;
+        if(num === 0) return 1;
+        
+        let one = memo[num-1] || permute(num-1);
+        let two = memo[num-2] || permute(num-2);
+        
+        if(!memo[num-1]) memo[num-1] = one;
+        if(!memo[num-2]) memo[num-2] = two;
+        
+        return one + two;
+    }
+    return permute(n);
+};
