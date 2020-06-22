@@ -1,0 +1,28 @@
+/**
+ * @param {number[]} candidates
+ * @param {number} target
+ * @return {number[][]}
+ */
+const combinationSum2 = function(candidates, target) {
+    candidates.sort()
+    let res = []
+
+    const backtrack = function(nums, remain, tmp = [], i = 0) {
+        if (remain < 0) {
+            return
+        }
+        if (remain === 0) {
+            return res.push([...tmp])
+        }
+        for (; i < nums.length; i++) {
+            tmp.push(nums[i])
+            backtrack(nums, remain - nums[i], tmp, i + 1) // next item
+            tmp.pop()
+        }
+    }
+    backtrack(candidates, target)
+
+    /* unique object array */
+    res = [...new Set(res.map(v => JSON.stringify(v)))].map(v => JSON.parse(v))
+    return res
+}
